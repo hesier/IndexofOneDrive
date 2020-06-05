@@ -1,0 +1,73 @@
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index of</title>
+</head>
+<body>
+<h1 id="title">Index of</h1>
+
+
+{%- for name, value in files.items() -%}
+{% if name == 'head.md' %}
+{{ value|safe }}
+{% endif %}
+{%- endfor -%}
+
+<hr>
+
+<table>
+    <tr>
+        <th>文件</th>
+        <th>时间</th>
+        <th>大小</th>
+    </tr>
+    <tr>
+        <td><a href="../">../</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    {%- for name, value in files.items() -%}
+    {% if 'url' not in value and name != 'readme.md' and name != 'head.md' %}
+    <tr>
+        <td><a href="{{name}}/">{{name}}/</a></td>
+        <td>{{value.time}}</td>
+        <td>{{value.size}}</td>
+    </tr>
+    {% endif %}
+    {% if 'url' in value and name != 'readme.md' and name != 'head.md' %}
+    <tr>
+        <td><a href="{{name}}">{{name}}</a></td>
+        <td>{{value.time}}</td>
+        <td>{{value.size}}</td>
+    </tr>
+    {% endif %}
+    {%- endfor -%}
+
+</table>
+
+<hr>
+
+{%- for name, value in files.items() -%}
+{% if name == 'readme.md' %}
+{{ value|safe }}
+{% endif %}
+{%- endfor -%}
+
+</body>
+
+<style>
+    td, th {
+        padding: 0 20px;
+        text-align: left;
+    }
+</style>
+
+<script>
+    const title = 'Index of ' + decodeURIComponent(window.location.pathname);
+    document.title = title;
+    document.getElementById('title').innerText = title;
+</script>
+
+</html>
