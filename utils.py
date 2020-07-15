@@ -37,6 +37,8 @@ def format_size(size, dot=1):
 
 
 def format_time(time_data, time_format='%Y-%m-%dT%H:%M:%SZ'):
+    if len(time_data) > 20:
+        time_format = '%Y-%m-%dT%H:%M:%S.%fZ'
     dt = datetime.datetime.strptime(time_data, time_format) + datetime.timedelta(hours=8)
     return dt.strftime("%Y-%m-%d %H:%M")
 

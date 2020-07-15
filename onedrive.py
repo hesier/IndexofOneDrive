@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import urllib.parse
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from gevent.pywsgi import WSGIServer
@@ -15,15 +16,18 @@ from utils import format_path, format_size, format_time, render_markdown
 
 ip = '127.0.0.1'
 port = 5000
-root_path = '/'  # onedrive 目录
+root_path = '/'  # 要列出的 onedrive 目录
+is_consumers = True  # 默认为 工作/学校帐户，个人账号需要改为 True
 
 config_path = 'config.yaml'
 client_url = 'https://login.microsoftonline.com/common/oauth2/token'
+consumers_client_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
 client_data = {
     'client_id': '29770f3f-0583-4301-b622-3af9c1935a9c',
     'redirect_uri': 'http://localhost/myapp/',
     'client_secret': 'Bz9TD0J-K4vDp.oQA_CTqOK53g1t6N2__a',
-    'grant_type': 'refresh_token'
+    'grant_type': 'refresh_token',
+    'scope': 'Files.Read.All offline_access'
 }
 headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 cache = {
@@ -57,7 +61,8 @@ def init_token(code=None):
         # client_data['scope'] = 'User.Read Files.ReadWrite.All'
         client_data['grant_type'] = 'authorization_code'
         client_data['code'] = code
-    r = requests.post(client_url, data=client_data, headers=headers)
+    r = requests.post(consumers_client_url if is_consumers else client_url,
+                      data=urllib.parse.urlencode(client_data, doseq=True), headers=headers)
     res = eval(r.text)
     if "refresh_token" in res and "access_token" in res:
         cache['access_token'] = res["access_token"]
