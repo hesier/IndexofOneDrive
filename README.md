@@ -10,7 +10,7 @@ pip install -r requirements.txt
 ## 获取 code
 [https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=29770f3f-0583-4301-b622-3af9c1935a9c&response_type=code&redirect_uri=http://localhost/myapp/&scope=Files.Read.All+offline_access](https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=29770f3f-0583-4301-b622-3af9c1935a9c&response_type=code&redirect_uri=http://localhost/myapp/&scope=Files.Read.All+offline_access)
 
-访问该地址，获取重定向后地址中的 code 字段值，注意地址中包含 session_state 字段。
+访问该地址，获取重定向后地址中的 code 字段值，注意地址中可能包含 session_state 字段。
 
 ## 获取 refresh_token
 

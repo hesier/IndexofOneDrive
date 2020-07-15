@@ -17,7 +17,7 @@ from utils import format_path, format_size, format_time, render_markdown
 ip = '127.0.0.1'
 port = 5000
 root_path = '/'  # 要列出的 onedrive 目录
-is_consumers = True  # 默认为 工作/学校帐户，个人账号需要改为 True
+is_consumers = False  # 默认为 工作/学校帐户，个人账号需要改为 True
 
 config_path = 'config.yaml'
 client_url = 'https://login.microsoftonline.com/common/oauth2/token'
